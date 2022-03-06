@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Layout from "./components/layout";
+import NoSearch from "./components/no-search";
+import Profile from "./components/profile";
+import Elixirs from "./components/elixirs";
+import useWizard from "./hooks/wizard-hooks";
 
-function App() {
+const App = () => {
+  const { wizardState } = useWizard();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      { wizardState.hasWizard ? (
+        <>
+          { wizardState.loading ? (
+            <p>Loading</p>
+          ) : (
+            <>
+              <Profile />
+              <Elixirs />
+            </>
+          )}
+        </>
+      ) : (
+        <NoSearch />
+      )}
+    </Layout>
   );
-}
+};
 
 export default App;
